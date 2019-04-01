@@ -5,6 +5,7 @@
 	"application": {
 		"name": "AngularJS-WebAPI-BookStore",
 		"language": "DOTNET",
+		"scm": {},
 		"artifact_store": {
 			"type": "s3",
 			"repositories": [
