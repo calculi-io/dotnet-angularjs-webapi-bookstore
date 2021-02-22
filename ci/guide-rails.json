@@ -1,11 +1,10 @@
 {
 	"metadata": {
-		"version": 1
+		"version": 2
 	},
 	"application": {
 		"name": "AngularJS-WebAPI-BookStore",
 		"language": "DOTNET",
-		"scm": {},
 		"artifact_store": {
 			"type": "s3",
 			"repositories": [
@@ -29,30 +28,9 @@
 			{
 				"name": "Build",
 				"segment_type": "build",
-				"job_steps": [
-					{
-						"name": "Restore",
-						"definition": "Restore with nuget",
-						"command": "nuget restore",
-						"properties": null
-					},
-					{
-						"name": "Build",
-						"definition": "Build debug files",
-						"command": "msbuild /t:Rebuild /p:Configuration=Debug",
-						"properties": null
-					},
-					{
-						"name": "Unit test and Coverage",
-						"definition": "Unit test and coverage",
-						"command": ".\\packages\\OpenCover.4.6.519\\tools\\OpenCover.Console.exe -register:Path64 -filter:+[((application.name))]*-[((application.name))]((application.name)).Tests.* -target:.\\packages\\Nunit.ConsoleRunner.3.9.0\\tools\\nunit3-console.exe \"-targetargs:((application.name))/bin/((application.name)).dll --result:test.xml;format=nunit3\" \"-output:coverage.xml\" -searchdirs:((application.name))/obj/Debug",
-						"properties": null
-					}
-				],
 				"exit_actions": {
 					"default": {
 						"fetch_logs": true,
-						"notifications": [],
 						"code_analysis": {
 							"publish": true,
 							"properties": []
@@ -65,20 +43,14 @@
 					"update_watch_time": "",
 					"serial": false
 				},
-				"application_init": {
-					"command": "",
-					"arguments": null
-				},
+				"application_init": {},
 				"packages": [
 					{
 						"name": "((application.name))",
-						"dependencies": [],
 						"downloads": [],
 						"files": [
 							"((application.name))*"
-						],
-						"package_install_command": "",
-						"installed_path": ""
+						]
 					}
 				],
 				"instance_tags": [
@@ -101,13 +73,37 @@
 						"UnhealthyThresholdCount": 0
 					}
 				},
-				"cache_info": {}
+				"cache_info": {},
+				"tasks": [
+					{
+						"name": "AngularJS-WebAPI-BookStore",
+						"steps": [
+							{
+								"name": "Restore",
+								"definition": "Restore with nuget",
+								"command": "nuget restore",
+								"properties": null
+							},
+							{
+								"name": "Build",
+								"definition": "Build debug files",
+								"command": "msbuild /t:Rebuild /p:Configuration=Debug",
+								"properties": null
+							},
+							{
+								"name": "Unit test and Coverage",
+								"definition": "Unit test and coverage",
+								"command": ".\\packages\\OpenCover.4.6.519\\tools\\OpenCover.Console.exe -register:Path64 -filter:+[((application.name))]*-[((application.name))]((application.name)).Tests.* -target:.\\packages\\Nunit.ConsoleRunner.3.9.0\\tools\\nunit3-console.exe \"-targetargs:((application.name))/bin/((application.name)).dll --result:test.xml;format=nunit3\" \"-output:coverage.xml\" -searchdirs:((application.name))/obj/Debug",
+								"properties": null
+							}
+						]
+					}
+				]
 			}
 		],
 		"exit_actions": {
 			"default": {
 				"fetch_logs": true,
-				"notifications": [],
 				"code_analysis": {
 					"publish": true,
 					"properties": []
@@ -134,10 +130,7 @@
 				"target_path": "bin/execute-tests.sh"
 			}
 		],
-		"application_init": {
-			"command": "",
-			"arguments": null
-		},
+		"application_init": {},
 		"process": {
 			"init": {
 				"command": "bin/start-service.sh"
